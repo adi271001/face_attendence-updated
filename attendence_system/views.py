@@ -6,6 +6,23 @@ from django.http import HttpResponse
 from django.template import loader
 from django.contrib import messages
 from .forms import LoginForm
+from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, reverse
+from django.contrib.auth.views import login_required
+
+# rest test
+from django.contrib.auth.models import User
+from .serializers import UserSerializer
+from rest_framework import viewsets, status, permissions
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+# end rest test
+
+from .models import EmployeePresence
+from main.models import Admin, Employee
+
+import datetime
+
 
 # Create your views here.
 def user_login(request):
@@ -55,23 +72,6 @@ def attn_records(request):
 @login_required
 def register_user(request):
     return render(request, 'attendence_system/register.html',  {'section': 'register_user'})
-from django.shortcuts import render, HttpResponse, Http404, HttpResponseRedirect, reverse
-from django.contrib.auth.views import login_required
-
-# rest test
-from django.contrib.auth.models import User
-from .serializers import UserSerializer
-from rest_framework import viewsets, status, permissions
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
-# end rest test
-
-from .models import EmployeePresence
-from main.models import Admin, Employee
-
-import datetime
-
 
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -153,7 +153,6 @@ def attendance(request):
                                       date=datetime.date.today())
                 obj.save()
         return HttpResponse('ok')
-
 
 def view_leaves(request):
     return HttpResponseRedirect(reverse('management:show-leaves'))
