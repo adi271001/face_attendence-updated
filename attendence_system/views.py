@@ -153,6 +153,6 @@ def attendance(request):
                                       date=datetime.date.today())
                 obj.save()
         return HttpResponse('ok')
-
+@login_required
 def view_leaves(request):
     return HttpResponseRedirect(reverse('management:show-leaves'))
