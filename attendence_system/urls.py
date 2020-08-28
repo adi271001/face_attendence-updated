@@ -1,9 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
-
 from . import views
-
 urlpatterns = [
     path('home/', views.home, name='home'),
     path('record_attn/', views.record_attn, name='record_attn'),
